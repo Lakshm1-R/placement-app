@@ -209,7 +209,7 @@ router.post('/:id/start', authMiddleware, async (req, res) => {
     await assignment.save();
 
     // Always use secured quiz app (Expo web)
-    const expoUrl = process.env.EXPO_QUIZ_URL || 'http://localhost:19006';
+    const expoUrl = process.env.EXPO_QUIZ_URL || 'https://placement-app-sewb.vercel.app/';
     const quizUrl = `${expoUrl.replace(/\/$/, '')}/?quiz=${encodeURIComponent(test.title)}`;
     return res.json({ quizUrl });
   } catch (err) {
