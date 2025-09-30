@@ -11,7 +11,7 @@ const http = require("http");
 const { Server } = require("socket.io");
 
 // Sensible defaults for quiz integration if not provided via .env
-process.env.EXPO_QUIZ_URL = process.env.EXPO_QUIZ_URL || "http://localhost:19006";
+process.env.EXPO_QUIZ_URL = process.env.EXPO_QUIZ_URL || "https://placement-app-sewb.vercel.app/";
 process.env.QUIZ_LAUNCH_MODE = process.env.QUIZ_LAUNCH_MODE || "expo";
 process.env.QUIZ_BASE_URL = process.env.QUIZ_BASE_URL || "http://localhost:3001"; // fallback
 process.env.QUIZ_RUN_URL = process.env.QUIZ_RUN_URL || process.env.QUIZ_BASE_URL; // fallback
@@ -35,7 +35,7 @@ app.set("io", io);
 // Allow frontend (3000) and secured quiz app (19006) to call the API
 const allowedOrigins = [
   (process.env.CLIENT_URL || "http://localhost:3000").replace(/\/$/, ""),
-  (process.env.EXPO_QUIZ_URL || "http://localhost:19006").replace(/\/$/, ""),
+  (process.env.EXPO_QUIZ_URL || "https://placement-app-sewb.vercel.app/").replace(/\/$/, ""),
 ];
 
 app.use(
