@@ -179,7 +179,7 @@ const [attempted, setAttempted] = useState(false);
 const fetchQuizData = async (department) => {
   try {
     // Make API call to fetch quiz data based on the department (legacy)
-    const response = await fetch(`http://localhost:3001/quiz/${department}`);
+    const response = await fetch(`https://placement-app-kg7c.onrender.com/quiz/${department}`);
     const data = await response.json();
 
     // Handle the response data (quiz data)
@@ -215,7 +215,7 @@ useEffect(() => {
       setQuizName(q);
       (async () => {
         try {
-          const resp = await fetch(`http://localhost:3001/quiz/${encodeURIComponent(q)}`);
+          const resp = await fetch(`https://placement-app-kg7c.onrender.com/quiz/${encodeURIComponent(q)}`);
           const data = await resp.json();
           const updatedQuestions = await Promise.all(
             (data.questions || []).map(async (qu, index) => {
@@ -256,7 +256,7 @@ useEffect(() => {
   }
 
           //  First check if the register number already exists
-      const response = await fetch('http://localhost:3001/submitted-registers');
+      const response = await fetch('https://placement-app-kg7c.onrender.com/submitted-registers');
       const data = await response.json();
 
       if (data?.registerNumbers?.includes(registerInput.trim())) {
@@ -268,7 +268,7 @@ useEffect(() => {
          // Already loaded by name in useEffect; if not yet, try again quick
          if (!questions || questions.length === 0) {
            try {
-             const resp = await fetch(`http://localhost:3001/quiz/${encodeURIComponent(quizName)}`);
+             const resp = await fetch(`https://placement-app-kg7c.onrender.com/quiz/${encodeURIComponent(quizName)}`);
              const data2 = await resp.json();
              const updatedQuestions = await Promise.all(
                (data2.questions || []).map(async (qu, index) => {
@@ -320,7 +320,7 @@ useEffect(() => {
   setScore(finalScore); // Update score state
 
     try {
-      const response = await fetch('http://localhost:3001/submit', {
+      const response = await fetch('https://placement-app-kg7c.onrender.com/submit', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -347,7 +347,7 @@ useEffect(() => {
           // Try primary endpoint
           let ok = false;
           try {
-            const r1 = await fetch('http://localhost:5000/api/prep/webhooks/quiz/submission-simple', {
+            const r1 = await fetch('https://placement-app-1-uczm.onrender.com/api/prep/webhooks/quiz/submission-simple', {
               method: 'POST',
               headers: { 'Content-Type': 'application/json' },
               body: JSON.stringify({
@@ -362,7 +362,7 @@ useEffect(() => {
           // Fallback alias
           if (!ok) {
             try {
-              const r2 = await fetch('http://localhost:5000/api/prep/webhooks/submission-simple', {
+              const r2 = await fetch('https://placement-app-1-uczm.onrender.com/api/prep/webhooks/submission-simple', {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({
@@ -377,9 +377,9 @@ useEffect(() => {
           }
           // Ultimate fallback: GET ping to warm up then retry primary once
           if (!ok) {
-            try { await fetch('http://localhost:5000/api/prep/webhooks/ping'); } catch (e) {}
+            try { await fetch('https://placement-app-1-uczm.onrender.com/api/prep/webhooks/ping'); } catch (e) {}
             try {
-              await fetch('http://localhost:5000/api/prep/webhooks/quiz/submission-simple', {
+              await fetch('https://placement-app-1-uczm.onrender.com/api/prep/webhooks/quiz/submission-simple', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({
