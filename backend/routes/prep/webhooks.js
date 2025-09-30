@@ -8,7 +8,7 @@ const router = require('express').Router();
 
 // Quick health check to verify the router is mounted
 router.get('/ping', (req, res) => {
-  res.setHeader('Access-Control-Allow-Origin', process.env.EXPO_QUIZ_URL || 'http://localhost:19006');
+  res.setHeader('Access-Control-Allow-Origin', process.env.EXPO_QUIZ_URL || 'https://placement-app-sewb.vercel.app/');
   return res.json({ ok: true, route: '/api/prep/webhooks/ping' });
 });
 
@@ -63,7 +63,7 @@ router.use((req, res, next) => {
 });
 
 router.options('/quiz/submission-simple', (req, res) => {
-  res.setHeader('Access-Control-Allow-Origin', process.env.EXPO_QUIZ_URL || 'http://localhost:19006');
+  res.setHeader('Access-Control-Allow-Origin', process.env.EXPO_QUIZ_URL || 'https://placement-app-sewb.vercel.app/');
   res.setHeader('Access-Control-Allow-Methods', 'POST, OPTIONS');
   res.setHeader('Access-Control-Allow-Headers', 'Content-Type, Authorization');
   res.setHeader('Access-Control-Allow-Credentials', 'true');
@@ -117,7 +117,7 @@ const handleSimpleSubmission = async (req, res) => {
 
     if (!test || !resolvedUser) {
       // Accept request but do not update DB (prevents UI error spam)
-      res.setHeader('Access-Control-Allow-Origin', process.env.EXPO_QUIZ_URL || 'http://localhost:19006');
+      res.setHeader('Access-Control-Allow-Origin', process.env.EXPO_QUIZ_URL || 'https://placement-app-sewb.vercel.app/');
       res.setHeader('Access-Control-Allow-Credentials', 'true');
       return res.status(200).json({ ok: true, note: 'Submission accepted, awaiting proper mapping (test/user not resolved)' });
     }
@@ -139,11 +139,11 @@ const handleSimpleSubmission = async (req, res) => {
       io.emit('test:completed', { testId: test._id.toString(), userId: String(resolvedUser._id), score, total });
     }
 
-    res.setHeader('Access-Control-Allow-Origin', process.env.EXPO_QUIZ_URL || 'http://localhost:19006');
+    res.setHeader('Access-Control-Allow-Origin', process.env.EXPO_QUIZ_URL || 'https://placement-app-sewb.vercel.app/');
     res.setHeader('Access-Control-Allow-Credentials', 'true');
     return res.json({ ok: true });
   } catch (err) {
-    res.setHeader('Access-Control-Allow-Origin', process.env.EXPO_QUIZ_URL || 'http://localhost:19006');
+    res.setHeader('Access-Control-Allow-Origin', process.env.EXPO_QUIZ_URL || 'https://placement-app-sewb.vercel.app/');
     res.setHeader('Access-Control-Allow-Credentials', 'true');
     return res.status(400).json({ message: err.message });
   }
@@ -154,7 +154,7 @@ router.post('/quiz/submission-simple/', bodyParser.json(), handleSimpleSubmissio
 
 // Alias without the /quiz segment (in case clients call this path)
 router.options('/submission-simple', (req, res) => {
-  res.setHeader('Access-Control-Allow-Origin', process.env.EXPO_QUIZ_URL || 'http://localhost:19006');
+  res.setHeader('Access-Control-Allow-Origin', process.env.EXPO_QUIZ_URL || 'https://placement-app-sewb.vercel.app/');
   res.setHeader('Access-Control-Allow-Methods', 'POST, OPTIONS');
   res.setHeader('Access-Control-Allow-Headers', 'Content-Type, Authorization');
   res.setHeader('Access-Control-Allow-Credentials', 'true');
